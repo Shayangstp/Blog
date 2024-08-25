@@ -46,7 +46,7 @@ const AddBlog = ({ id }) => {
   const postAddBlog = async () => {
     if (blogFormIsValid) {
       try {
-        const response = await axios.post("http://localhost:3000/api/posts", {
+        const response = await axios.post("https://blog-eight-tan-88.vercel.app/api/posts", {
           title: blogTitle,
           content: blogContent,
         });
@@ -77,7 +77,7 @@ const AddBlog = ({ id }) => {
   const putBlogPost = async () => {
     if (blogFormIsValid) {
       try {
-        const response = await axios.put(`http://localhost:3000/api/posts/${id}`, {
+        const response = await axios.put(`https://blog-eight-tan-88.vercel.app/${id}`, {
           title: blogTitle,
           content: blogContent,
         });
