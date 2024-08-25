@@ -84,7 +84,7 @@ const BlogDetail = ({ id }) => {
           <div className="text-[15px] mt-5 ml-5">{data.content}</div>
         </div>
       ) : (
-        <div className="flex justify-center mt-[40%]">
+        <div className="flex justify-center mt-[10%]">
           <Loading />
         </div>
       )}
