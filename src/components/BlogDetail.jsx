@@ -11,7 +11,9 @@ import { formatDate } from "@/lib/formatDate";
 
 const deleteBlogPost = async (id) => {
   try {
-    const response = await axios.delete(`https://blog-shayangstps-projects.vercel.app/api/posts/${id}`);
+    const response = await axios.delete(
+      `https://blog-shayangstps-projects.vercel.app/api/posts/${id}`
+    );
     successMessage("Blog post deleted successfully");
     setTimeout(() => {
       window.location.href = "/";
@@ -40,7 +42,7 @@ const BlogDetail = ({ data }) => {
               onClick={async () => {
                 dispatch(RsetBlogTitle(data.title));
                 dispatch(RsetBlogContent(data.content));
-                router.push(`/addblog/${data._id}`);
+                router.push(`https://blog-shayangstps-projects.vercel.app/addblog/${data._id}`);
               }}
             >
               <Pen className="w-3 h-3 mr-1" />
