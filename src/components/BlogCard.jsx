@@ -28,15 +28,11 @@ const BlogCard = ({ title, content, id, update }) => {
         <div className="xl:text-[14px] text-[12px] text-gray-100">{truncateText(content, 20)}</div>
       </div>
       <div className="flex justify-end items-end mt-auto">
-        <Button
-          variant="secondary"
-          className="text-[10px] lg:text-[13px]"
-          onClick={() => {
-            router.push(`/blogDetail/${id}`);
-          }}
-        >
-          Read More
-        </Button>
+        <Link href={`/blogDetail/${id}`}>
+          <Button variant="secondary" className="text-[10px] lg:text-[13px]">
+            Read More
+          </Button>
+        </Link>
       </div>
     </div>
   );
