@@ -21,6 +21,7 @@ const Home = () => {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get("/api/posts");
+      console.log(response);
       setBlogs(response.data);
     } catch (err) {
       console.error("Failed to fetch blogs", err);
@@ -33,15 +34,16 @@ const Home = () => {
 
   return (
     <div className="flex gap-5 justify-center flex-wrap mt-10">
-      {blogs.map((post) => (
-        <BlogCard
-          key={post._id}
-          title={post.title}
-          content={post.content}
-          id={post._id}
-          update={post.updatedAt}
-        />
-      ))}
+      {blogs &&
+        blogs.map((post) => (
+          <BlogCard
+            key={post._id}
+            title={post.title}
+            content={post.content}
+            id={post._id}
+            update={post.updatedAt}
+          />
+        ))}
     </div>
   );
 };
