@@ -22,8 +22,8 @@ const BlogCard = ({ title, content, id, update }) => {
       className="lg:w-[40%] w-[90%] h-[200px] border border-gray-300 p-3 rounded-lg flex flex-col"
     >
       <div id="cardDetailContainer" className="flex flex-col gap-2 mt-2 flex-1">
-        <header className=" border-b pb-2 border-gray-500 flex flex-col gap-1">
-          <span className="font-bold text-[20px]">{title}</span>
+        <header className="border-b pb-2 border-gray-500 flex flex-col gap-1">
+          <span className="font-bold text-[20px] break-words overflow-hidden">{title}</span>
           <span className="text-[12px] text-gray-400">published - {formattedDate}</span>
         </header>
         <div className="xl:text-[14px] text-[12px] text-gray-100">{truncateText(content, 20)}</div>

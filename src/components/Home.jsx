@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import BlogCard from "./BlogCard";
 import axios from "axios";
+import { Loading } from "@/lib/loading";
 
 // export const getBlogs = async () => {
 //   try {
@@ -32,8 +33,8 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex gap-5 justify-center flex-wrap mt-10">
-      {blogs &&
+    <div className="flex gap-5 justify-center items-center flex-wrap mt-10">
+      {blogs ? (
         blogs.map((post) => (
           <BlogCard
             key={post._id}
@@ -42,7 +43,12 @@ const Home = () => {
             id={post._id}
             update={post.updatedAt}
           />
-        ))}
+        ))
+      ) : (
+        <div className="flex justify-center mt-[40%]">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };

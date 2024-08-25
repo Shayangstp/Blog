@@ -114,7 +114,7 @@ const AddBlog = ({ id }) => {
 
   return (
     <div id="addBlogContainer" className="flex justify-center mt-5">
-      <form className="w-[50%] flex flex-col gap-2">
+      <form className="lg:w-[50%] w-[90%] flex flex-col gap-2">
         <span>
           <Label htmlFor="title" className="font-bold text-[25px]">
             Title

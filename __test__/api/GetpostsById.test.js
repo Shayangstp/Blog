@@ -2,17 +2,17 @@
  * @jest-environment node
  */
 import { createMocks } from "node-mocks-http";
-import { GET } from "../../src/app/api/posts/[id]/route"; // Adjust the import path as needed
+import { GET } from "../../src/app/api/posts/[id]/route";
 import startDb from "../../src/lib/db";
 import BlogPostModel from "../../src/models/blogModel";
-import { NextResponse } from "next/server";
-import { isValidObjectId } from "mongoose"; // Import mongoose normally
+
+import { isValidObjectId } from "mongoose";
 
 jest.mock("../../src/lib/db");
 jest.mock("../../src/models/blogModel");
-// Mock only the specific function in mongoose, not the entire module
+
 jest.mock("mongoose", () => ({
-  ...jest.requireActual("mongoose"), // Import the actual mongoose, except isValidObjectId
+  ...jest.requireActual("mongoose"),
   isValidObjectId: jest.fn(),
 }));
 jest.mock("next/server", () => ({
@@ -34,30 +34,61 @@ describe("GET /api/posts/:id", () => {
   });
 
   test("successfully retrieves a blog post", async () => {
-    // Mock the database start
     startDb.mockResolvedValue();
 
-    // Mock the isValidObjectId to return true
     isValidObjectId.mockReturnValue(true);
 
-    // Mock the findById method on BlogPostModel
     const blogPost = { _id: "123", title: "Test Title", content: "Test Content" };
     BlogPostModel.findById.mockResolvedValue(blogPost);
 
-    // Create the request and response objects
     const { req, res } = createMocks({
       method: "GET",
       params: { id: "123" },
     });
 
-    // Call the GET function
     const response = await GET(req, { params: { id: "123" } });
 
-    // Validate the response
     expect(response.status).toBe(200);
     expect(response.data).toEqual(blogPost);
 
-    // Ensure that findById was called with correct arguments
+    expect(BlogPostModel.findById).toHaveBeenCalledWith("123");
+  });
+
+  test("returns 400 if the blog post ID is invalid", async () => {
+    startDb.mockResolvedValue();
+
+    isValidObjectId.mockReturnValue(false);
+
+    const { req, res } = createMocks({
+      method: "GET",
+      params: { id: "invalid-id" },
+    });
+
+    const response = await GET(req, { params: { id: "invalid-id" } });
+
+    expect(response.status).toBe(400);
+    expect(response.data).toEqual({ message: "Invalid blog post ID" });
+
+    expect(BlogPostModel.findById).not.toHaveBeenCalled();
+  });
+
+  test("returns 404 if the blog post is not found", async () => {
+    startDb.mockResolvedValue();
+
+    isValidObjectId.mockReturnValue(true);
+
+    BlogPostModel.findById.mockResolvedValue(null);
+
+    const { req, res } = createMocks({
+      method: "GET",
+      params: { id: "123" },
+    });
+
+    const response = await GET(req, { params: { id: "123" } });
+
+    expect(response.status).toBe(404);
+    expect(response.data).toEqual({ message: "Blog post not found" });
+
     expect(BlogPostModel.findById).toHaveBeenCalledWith("123");
   });
 });

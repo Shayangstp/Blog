@@ -8,6 +8,7 @@ import { RsetBlogContent, RsetBlogTitle } from "@/slices/mainSlices";
 import { useRouter } from "next/navigation";
 import { errorMessage, successMessage } from "@/lib/toast";
 import { formatDate } from "@/lib/formatDate";
+import { Loading } from "@/lib/loading";
 
 const deleteBlogPost = async (id) => {
   try {
@@ -37,39 +38,54 @@ const BlogDetail = ({ id }) => {
   }, []);
 
   return (
-    <div id="detailContainer" className="mt-10">
-      {data && (
+    <div id="detailContainer" className="mt-3">
+      <div id="buttons" className="flex gap-2 justify-end ">
+        <Button
+          className="lg:text-[13px] text-[11px]"
+          variant="secondary"
+          onClick={() => {
+            dispatch(RsetBlogTitle(data.title));
+            dispatch(RsetBlogContent(data.content));
+            router.push(`/addblog/${data._id}`);
+          }}
+        >
+          <Pen className="w-3 h-3 mr-1" />
+          update
+        </Button>
+        <Button
+          variant="secondary"
+          className="hover:bg-red-500 lg:text-[13px] text-[11px]"
+          onClick={async () => {
+            await deleteBlogPost(data._id);
+          }}
+        >
+          <Trash className="w-3 h-3 mr-1" />
+          delete
+        </Button>
+      </div>
+      {data ? (
         <div id="blogDetail" className="flex flex-col gap-5">
-          <header className="flex justify-between mt-3 bg-gray-200 p-5 rounded-xl">
-            <span className="flex flex-col gap-1">
-              <span className="text-[30px] font-bold text-black">{data.title}</span>
-              <span className="text-[15px] text-gray-600">
+          <div
+            id="header"
+            className="flex justify-between mt-3 bg-gray-200 p-5 rounded-xl overflow-hidden"
+          >
+            <div className="flex flex-col gap-1">
+              <span
+                className="xl:text-[30px] text-[20px] font-bold text-black break-words overflow-hidden"
+                style={{ wordBreak: "break-word" }}
+              >
+                {data.title}
+              </span>
+              <span className="xl:text-[15px] text-[12px] text-gray-600">
                 Published - {formatDate(data.updatedAt)}
               </span>
-            </span>
-            <span className="flex gap-2 mt-1">
-              <Button
-                onClick={() => {
-                  dispatch(RsetBlogTitle(data.title));
-                  dispatch(RsetBlogContent(data.content));
-                  router.push(`/addblog/${data._id}`);
-                }}
-              >
-                <Pen className="w-3 h-3 mr-1" />
-                update
-              </Button>
-              <Button
-                className="hover:bg-red-500"
-                onClick={async () => {
-                  await deleteBlogPost(data._id);
-                }}
-              >
-                <Trash className="w-3 h-3 mr-1" />
-                delete
-              </Button>
-            </span>
-          </header>
-          <div className="text-[13px] mt-5 ml-5">{data.content}</div>
+            </div>
+          </div>
+          <div className="text-[15px] mt-5 ml-5">{data.content}</div>
+        </div>
+      ) : (
+        <div className="flex justify-center mt-[40%]">
+          <Loading />
         </div>
       )}
     </div>
