@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/formatDate";
+import { Link } from "next";
 
 const truncateText = (text, maxWords) => {
   const words = text.split(" ");
