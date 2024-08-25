@@ -46,13 +46,10 @@ const AddBlog = ({ id }) => {
   const postAddBlog = async () => {
     if (blogFormIsValid) {
       try {
-        const response = await axios.post(
-          "https://blog-shayangstps-projects.vercel.app/api/posts",
-          {
-            title: blogTitle,
-            content: blogContent,
-          }
-        );
+        const response = await axios.post("/api/posts", {
+          title: blogTitle,
+          content: blogContent,
+        });
         if (response.status === 201) {
           dispatch(RsetBlogContent(""));
           dispatch(RsetBlogTitle(""));
@@ -80,7 +77,7 @@ const AddBlog = ({ id }) => {
   const putBlogPost = async () => {
     if (blogFormIsValid) {
       try {
-        const response = await axios.put(`https://blog-shayangstps-projects.vercel.app/api/posts/${id}`, {
+        const response = await axios.put(`/api/posts/${id}`, {
           title: blogTitle,
           content: blogContent,
         });

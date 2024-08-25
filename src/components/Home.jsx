@@ -4,9 +4,7 @@ import axios from "axios";
 
 export const getBlogs = async () => {
   try {
-    const response = await axios.get("https://blog-shayangstps-projects.vercel.app/api/posts", {
-      catch: "no-store",
-    });
+    const response = await axios.get("/api/posts");
     return response.data;
   } catch (err) {
     return [];

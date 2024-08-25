@@ -11,9 +11,7 @@ import { formatDate } from "@/lib/formatDate";
 
 const deleteBlogPost = async (id) => {
   try {
-    const response = await axios.delete(
-      `https://blog-shayangstps-projects.vercel.app/api/posts/${id}`
-    );
+    const response = await axios.delete(`/api/posts/${id}`);
     successMessage("Blog post deleted successfully");
     setTimeout(() => {
       window.location.href = "/";
