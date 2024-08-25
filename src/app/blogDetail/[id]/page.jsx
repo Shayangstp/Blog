@@ -1,17 +1,32 @@
+"use client";
 import BlogDetail from "@/components/BlogDetail";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const getBlogById = async (id) => {
-  const response = await axios.get(`http://localhost:3000/api/posts/${id}`);
-  return response.data;
-};
+// const getBlogById = async (id) => {
+//   const response = await axios.get(`/api/posts/${id}`);
+//   return response.data;
+// };
 
-const page = async ({ params }) => {
+const page = ({ params }) => {
   const { id } = params;
-  const data = await getBlogById(id);
+  const [data, setData] = useState();
 
-  return <BlogDetail data={data} />;
+  const fetchBlogById = async () => {
+    try {
+      const response = await axios.get(`/api/posts/${id}`);
+      console.log(response);
+      setData(response.data);
+    } catch (err) {
+      console.error("Failed to fetch blogs", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogById();
+  }, []);
+
+  return <div>{data && <BlogDetail data={data} />}</div>;
 };
 
 export default page;
