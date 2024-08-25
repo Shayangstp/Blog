@@ -41,6 +41,19 @@ describe("AddBlog Component", () => {
   });
 
   it("renders correctly", () => {
+    useSelector.mockImplementation((selector) => {
+      switch (selector) {
+        case selectBlogTitle:
+          return ""; // Mock initial title
+        case selectBlogContent:
+          return ""; // Mock initial content
+        case selectFormErrors:
+          return {}; // Mock initial form errors
+        default:
+          return "";
+      }
+    });
+
     render(<AddBlog />);
 
     // Check if the form elements are rendered correctly
@@ -57,6 +70,8 @@ describe("AddBlog Component", () => {
           return ""; // Mock blogTitle as empty
         case selectBlogContent:
           return ""; // Mock blogContent as empty
+        case selectFormErrors:
+          return {}; // Mock form errors
         default:
           return "";
       }
@@ -77,14 +92,15 @@ describe("AddBlog Component", () => {
     });
   });
 
-  test("submits the form and creates a blog post", async () => {
-    // Mock axios post request
+  it("submits the form and creates a blog post", async () => {
     useSelector.mockImplementation((selector) => {
       switch (selector) {
         case selectBlogTitle:
           return "Test Title"; // Mock non-empty blogTitle
         case selectBlogContent:
           return "Test Content"; // Mock non-empty blogContent
+        case selectFormErrors:
+          return {}; // Mock form errors
         default:
           return "";
       }
@@ -97,23 +113,25 @@ describe("AddBlog Component", () => {
     fireEvent.click(screen.getByText(/Submit/i));
 
     // Check if axios.post was called with the correct arguments
-    expect(axios.post).toHaveBeenCalledWith("http://localhost:3000/api/posts", {
+    expect(axios.post).toHaveBeenCalledWith("/api/posts", {
       title: "Test Title",
       content: "Test Content",
     });
+
     // Ensure that the dispatches are made to clear the form fields
     expect(mockDispatch).toHaveBeenCalledWith(RsetBlogTitle(""));
     expect(mockDispatch).toHaveBeenCalledWith(RsetBlogContent(""));
   });
 
-  test("updates an existing blog post", async () => {
-    // Mock axios put request
+  it("updates an existing blog post", async () => {
     useSelector.mockImplementation((selector) => {
       switch (selector) {
         case selectBlogTitle:
           return "Update Title"; // Mock non-empty blogTitle
         case selectBlogContent:
           return "Update Content"; // Mock non-empty blogContent
+        case selectFormErrors:
+          return {}; // Mock form errors
         default:
           return "";
       }
@@ -126,13 +144,26 @@ describe("AddBlog Component", () => {
     fireEvent.click(screen.getByRole("button", { name: /Update/i }));
 
     // Check if axios.put was called with the correct arguments
-    expect(axios.put).toHaveBeenCalledWith("http://localhost:3000/api/posts/123", {
+    expect(axios.put).toHaveBeenCalledWith("/api/posts/123", {
       title: "Update Title",
       content: "Update Content",
     });
   });
 
-  test("resets the form fields", () => {
+  it("resets the form fields", () => {
+    useSelector.mockImplementation((selector) => {
+      switch (selector) {
+        case selectBlogTitle:
+          return "Some Title"; // Mock initial title
+        case selectBlogContent:
+          return "Some Content"; // Mock initial content
+        case selectFormErrors:
+          return {}; // Mock form errors
+        default:
+          return "";
+      }
+    });
+
     render(<AddBlog />);
 
     // Simulate reset button click

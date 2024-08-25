@@ -18,7 +18,6 @@ const deleteBlogPost = async (id) => {
     }, 2000);
   } catch (error) {
     errorMessage("Failed to delete blog post");
-    console.error("Failed to delete blog post:", error.response?.data || error.message);
   }
 };
 const BlogDetail = ({ id }) => {
@@ -29,11 +28,8 @@ const BlogDetail = ({ id }) => {
   const fetchBlogById = async () => {
     try {
       const response = await axios.get(`/api/posts/${id}`);
-      console.log(response);
       setData(response.data);
-    } catch (err) {
-      console.error("Failed to fetch blogs", err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {

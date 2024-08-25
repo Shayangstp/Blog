@@ -16,15 +16,14 @@ import axios from "axios";
 
 const Home = () => {
   // const data = await getBlogs();
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState();
 
   const fetchBlogs = async () => {
     try {
       const response = await axios.get("/api/posts");
-      console.log(response);
       setBlogs(response.data);
     } catch (err) {
-      console.error("Failed to fetch blogs", err);
+      setBlogs([]);
     }
   };
 

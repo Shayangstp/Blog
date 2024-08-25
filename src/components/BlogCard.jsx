@@ -13,7 +13,7 @@ const truncateText = (text, maxWords) => {
   return text;
 };
 
-const BlogCard = ({ title = "", content = "", id = "", update = "" }) => {
+const BlogCard = ({ title, content, id, update }) => {
   const router = useRouter();
   const formattedDate = formatDate(update);
   return (
