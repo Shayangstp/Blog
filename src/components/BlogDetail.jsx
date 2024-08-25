@@ -53,10 +53,10 @@ const BlogDetail = ({ id }) => {
             </span>
             <span className="flex gap-2 mt-1">
               <Button
-                onClick={async () => {
+                onClick={() => {
                   dispatch(RsetBlogTitle(data.title));
                   dispatch(RsetBlogContent(data.content));
-                  router.push(`https://blog-shayangstps-projects.vercel.app/addblog/${data._id}`);
+                  router.push(`/addblog/${data._id}`);
                 }}
               >
                 <Pen className="w-3 h-3 mr-1" />
