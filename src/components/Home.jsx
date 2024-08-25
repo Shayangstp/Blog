@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BlogCard from "./BlogCard";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ import axios from "axios";
 
 const Home = () => {
   // const data = await getBlogs();
-  const [blogs, setBlogs] = React.useState([]);
+  const [blogs, setBlogs] = useState([]);
 
   const fetchBlogs = async () => {
     try {
@@ -26,6 +26,10 @@ const Home = () => {
       console.error("Failed to fetch blogs", err);
     }
   };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
 
   return (
     <div className="flex gap-5 justify-center flex-wrap mt-10">
