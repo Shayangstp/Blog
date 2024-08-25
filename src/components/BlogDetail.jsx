@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Pen, Target, Trash } from "lucide-react";
 import axios from "axios";
@@ -21,9 +21,24 @@ const deleteBlogPost = async (id) => {
     console.error("Failed to delete blog post:", error.response?.data || error.message);
   }
 };
-const BlogDetail = ({ data }) => {
+const BlogDetail = ({ id }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [data, setData] = useState();
+
+  const fetchBlogById = async () => {
+    try {
+      const response = await axios.get(`/api/posts/${id}`);
+      console.log(response);
+      setData(response.data);
+    } catch (err) {
+      console.error("Failed to fetch blogs", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogById();
+  }, []);
 
   return (
     <div id="detailContainer" className="mt-10">
