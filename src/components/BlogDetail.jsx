@@ -42,38 +42,40 @@ const BlogDetail = ({ id }) => {
 
   return (
     <div id="detailContainer" className="mt-10">
-      <div id="blogDetail" className="flex flex-col gap-5">
-        <header className="flex justify-between mt-3 bg-gray-200 p-5 rounded-xl">
-          <span className="flex flex-col gap-1">
-            <span className="text-[30px] font-bold text-black">{data.title}</span>
-            <span className="text-[15px] text-gray-600">
-              Published - {formatDate(data.updatedAt)}
+      {data && (
+        <div id="blogDetail" className="flex flex-col gap-5">
+          <header className="flex justify-between mt-3 bg-gray-200 p-5 rounded-xl">
+            <span className="flex flex-col gap-1">
+              <span className="text-[30px] font-bold text-black">{data.title}</span>
+              <span className="text-[15px] text-gray-600">
+                Published - {formatDate(data.updatedAt)}
+              </span>
             </span>
-          </span>
-          <span className="flex gap-2 mt-1">
-            <Button
-              onClick={async () => {
-                dispatch(RsetBlogTitle(data.title));
-                dispatch(RsetBlogContent(data.content));
-                router.push(`https://blog-shayangstps-projects.vercel.app/addblog/${data._id}`);
-              }}
-            >
-              <Pen className="w-3 h-3 mr-1" />
-              update
-            </Button>
-            <Button
-              className="hover:bg-red-500"
-              onClick={async () => {
-                await deleteBlogPost(data._id);
-              }}
-            >
-              <Trash className="w-3 h-3 mr-1" />
-              delete
-            </Button>
-          </span>
-        </header>
-        <div className="text-[13px] mt-5 ml-5">{data.content}</div>
-      </div>
+            <span className="flex gap-2 mt-1">
+              <Button
+                onClick={async () => {
+                  dispatch(RsetBlogTitle(data.title));
+                  dispatch(RsetBlogContent(data.content));
+                  router.push(`https://blog-shayangstps-projects.vercel.app/addblog/${data._id}`);
+                }}
+              >
+                <Pen className="w-3 h-3 mr-1" />
+                update
+              </Button>
+              <Button
+                className="hover:bg-red-500"
+                onClick={async () => {
+                  await deleteBlogPost(data._id);
+                }}
+              >
+                <Trash className="w-3 h-3 mr-1" />
+                delete
+              </Button>
+            </span>
+          </header>
+          <div className="text-[13px] mt-5 ml-5">{data.content}</div>
+        </div>
+      )}
     </div>
   );
 };
