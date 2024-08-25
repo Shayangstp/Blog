@@ -45,7 +45,7 @@ const Home = () => {
           />
         ))
       ) : (
-        <div className="flex justify-center mt-[40%]">
+        <div className="flex justify-center mt-[10%]">
           <Loading />
         </div>
       )}
