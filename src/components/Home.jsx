@@ -1,21 +1,22 @@
+"use client";
 import React from "react";
 import BlogCard from "./BlogCard";
 import axios from "axios";
 
-export const getBlogs = async () => {
-  try {
-    const response = await axios.get("https://blog-shayangstps-projects.vercel.app/api/posts", {
-      catch: "no-store",
-    });
-    return response.data;
-  } catch (err) {
-    return [];
-  }
-};
+// export const getBlogs = async () => {
+//   try {
+//     const response = await axios.get("https://blog-shayangstps-projects.vercel.app/api/posts", {
+//       catch: "no-store",
+//     });
+//     return response.data;
+//   } catch (err) {
+//     return [];
+//   }
+// };
 
-const Home = async () => {
-  const data = await getBlogs();
-  const [blogs, setBlogs] = React.useState(data);
+const Home = () => {
+  // const data = await getBlogs();
+  const [blogs, setBlogs] = React.useState([]);
 
   const fetchBlogs = async () => {
     try {
