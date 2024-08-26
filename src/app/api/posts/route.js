@@ -1,7 +1,6 @@
 import startDb from "@/lib/db";
-import BlogPostModel from "@/models/blogModel"; // Path to your BlogPost model
+import BlogPostModel from "@/models/blogModel";
 import { NextResponse } from "next/server";
-import { isValidObjectId } from "mongoose";
 
 export async function GET(request) {
   try {
