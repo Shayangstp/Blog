@@ -4,8 +4,11 @@
 # Requirements
 
 -Node.js (v14 or later)
+
 -Next.js (v13 or later)
+
 -MongoDB (or another database of your choice)
+
 -Tailwind CSS for styling (optional)
 
 
@@ -62,9 +65,12 @@ Delete blog posts.
 -Deployment: The application is deployed on Vercel, making it accessible online.
 
 
-# how deploy on vercel :
+# How deploy on vercel ?
 
 -Push your project to a Git repository (GitHub, GitLab, etc.).
+
 -Connect the repository to Vercel using their dashboard.
+
 -Configure environment variables on Vercel for the database connection and make interigation with mongoDB dashboard on vercel.
+
 -Deploy the application.
