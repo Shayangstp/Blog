@@ -5,7 +5,7 @@ import BlogCard from "./BlogCard";
 import axios from "axios";
 // import { Loading } from "@/lib/loading";
 
-export const dynamic = "force-dynamic";
+
 const fetchBlogSSR = async () => {
   try {
     const response = await axios.get("https://blog-shayangstps-projects.vercel.app/api/posts");
