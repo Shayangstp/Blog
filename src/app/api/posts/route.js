@@ -7,7 +7,7 @@ export async function GET(request) {
   try {
     await startDb();
 
-    const blogPosts = await BlogPostModel.find({});
+    const blogPosts = await BlogPostModel.find({}).sort({ createdAt: -1 });
 
     return NextResponse.json(blogPosts, { status: 200 });
   } catch (error) {
@@ -17,7 +17,6 @@ export async function GET(request) {
     );
   }
 }
-
 export async function POST(request) {
   try {
     await startDb();

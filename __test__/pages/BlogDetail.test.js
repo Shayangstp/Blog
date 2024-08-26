@@ -8,7 +8,6 @@ import "@testing-library/jest-dom";
 import { RsetBlogContent, RsetBlogTitle } from "@/slices/mainSlices";
 import { successMessage, errorMessage } from "../../src/lib/toast";
 
-// Mock the necessary dependencies
 jest.mock("axios");
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
@@ -44,12 +43,11 @@ describe("BlogDetail Component", () => {
     updatedAt: "2024-08-24T14:57:31.598Z",
   };
 
-  it("fetches and displays the blog post details correctly", async () => {
+  test("fetches and displays the blog post details correctly", async () => {
     axios.get.mockResolvedValueOnce({ data: mockData });
 
     render(<BlogDetail id="123" />);
 
-    // Wait for the data to be fetched and rendered
     await waitFor(() => {
       expect(screen.getByText("Test Blog Post")).toBeInTheDocument();
       expect(screen.getByText("This is the content of the test blog post.")).toBeInTheDocument();
@@ -57,12 +55,11 @@ describe("BlogDetail Component", () => {
     });
   });
 
-  it("dispatches the correct actions and navigates to the update page when 'update' is clicked", async () => {
+  test("dispatches the correct actions and navigates to the update page when 'update' is clicked", async () => {
     axios.get.mockResolvedValueOnce({ data: mockData });
 
     render(<BlogDetail id="123" />);
 
-    // Wait for the data to be fetched and rendered
     await waitFor(() => {
       expect(screen.getByText("Test Blog Post")).toBeInTheDocument();
     });
@@ -80,7 +77,6 @@ describe("BlogDetail Component", () => {
 
     render(<BlogDetail id="123" />);
 
-    // Wait for the data to be fetched and rendered
     await waitFor(() => {
       expect(screen.getByText("Test Blog Post")).toBeInTheDocument();
     });
@@ -93,13 +89,12 @@ describe("BlogDetail Component", () => {
     });
   });
 
-  it("handles delete errors gracefully", async () => {
+  test("handles delete errors", async () => {
     axios.get.mockResolvedValueOnce({ data: mockData });
     axios.delete.mockRejectedValueOnce(new Error("Failed to delete"));
 
     render(<BlogDetail id="123" />);
 
-    // Wait for the data to be fetched and rendered
     await waitFor(() => {
       expect(screen.getByText("Test Blog Post")).toBeInTheDocument();
     });

@@ -32,7 +32,7 @@ describe("DELETE /api/posts/:id", () => {
     jest.clearAllMocks();
   });
 
-  test("successfully deletes a blog post", async () => {
+  test("successfully delete a blog post", async () => {
     startDb.mockResolvedValue();
 
     isValidObjectId.mockReturnValue(true);

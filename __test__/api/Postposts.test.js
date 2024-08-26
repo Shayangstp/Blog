@@ -30,8 +30,8 @@ describe("POST /api/posts", () => {
     startDb.mockResolvedValue();
 
     const saveMock = jest.fn().mockResolvedValue({
-      title: "Charlie",
-      content: "this is test",
+      title: "Blog Title",
+      content: "Blog Content",
     });
 
     BlogPostModel.mockImplementation(() => ({
@@ -40,7 +40,7 @@ describe("POST /api/posts", () => {
 
     const { req, res } = createMocks({
       method: "POST",
-      body: { title: "Charlie", content: "this is test" },
+      body: { title: "Blog Title", content: "Blog Content" },
     });
 
     req.json = async () => req.body;
@@ -48,7 +48,7 @@ describe("POST /api/posts", () => {
     const response = await POST(req);
 
     expect(response.status).toBe(201);
-    expect(response.data).toEqual({ title: "Charlie", content: "this is test" });
+    expect(response.data).toEqual({ title: "Blog Title", content: "Blog Content" });
 
     expect(saveMock).toHaveBeenCalled();
   });
@@ -58,7 +58,7 @@ describe("POST /api/posts", () => {
 
     const { req: reqWithoutTitle } = createMocks({
       method: "POST",
-      body: { content: "this is test" },
+      body: { content: "Blog Content" },
     });
 
     reqWithoutTitle.json = async () => reqWithoutTitle.body;
@@ -70,7 +70,7 @@ describe("POST /api/posts", () => {
 
     const { req: reqWithoutContent } = createMocks({
       method: "POST",
-      body: { title: "Charlie" },
+      body: { title: "Blog Title" },
     });
 
     reqWithoutContent.json = async () => reqWithoutContent.body;

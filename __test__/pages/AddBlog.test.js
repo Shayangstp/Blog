@@ -14,7 +14,6 @@ import {
   RsetFormErrors,
 } from "@/slices/mainSlices";
 
-// Mock the necessary dependencies
 jest.mock("axios");
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
@@ -44,11 +43,11 @@ describe("AddBlog Component", () => {
     useSelector.mockImplementation((selector) => {
       switch (selector) {
         case selectBlogTitle:
-          return ""; // Mock initial title
+          return "";
         case selectBlogContent:
-          return ""; // Mock initial content
+          return "";
         case selectFormErrors:
-          return {}; // Mock initial form errors
+          return {};
         default:
           return "";
       }
@@ -56,22 +55,21 @@ describe("AddBlog Component", () => {
 
     render(<AddBlog />);
 
-    // Check if the form elements are rendered correctly
     expect(screen.getByLabelText(/Title/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Content/i)).toBeInTheDocument();
     expect(screen.getByText(/Submit/i)).toBeInTheDocument();
     expect(screen.getByText(/Reset/i)).toBeInTheDocument();
   });
 
-  it("validates form fields", async () => {
+  it("validate form ", async () => {
     useSelector.mockImplementation((selector) => {
       switch (selector) {
         case selectBlogTitle:
-          return ""; // Mock blogTitle as empty
+          return "";
         case selectBlogContent:
-          return ""; // Mock blogContent as empty
+          return "";
         case selectFormErrors:
-          return {}; // Mock form errors
+          return {};
         default:
           return "";
       }
@@ -79,10 +77,8 @@ describe("AddBlog Component", () => {
 
     render(<AddBlog />);
 
-    // Simulate form submission without filling the fields
     fireEvent.click(screen.getByText(/Submit/i));
 
-    // Check if the validation errors are shown
     expect(mockDispatch).toHaveBeenCalledWith({
       type: RsetFormErrors.type,
       payload: {
@@ -92,15 +88,15 @@ describe("AddBlog Component", () => {
     });
   });
 
-  it("submits the form and creates a blog post", async () => {
+  it("submit the form and creates a blog post", async () => {
     useSelector.mockImplementation((selector) => {
       switch (selector) {
         case selectBlogTitle:
-          return "Test Title"; // Mock non-empty blogTitle
+          return "Test Title";
         case selectBlogContent:
-          return "Test Content"; // Mock non-empty blogContent
+          return "Test Content";
         case selectFormErrors:
-          return {}; // Mock form errors
+          return {};
         default:
           return "";
       }
@@ -109,16 +105,13 @@ describe("AddBlog Component", () => {
 
     render(<AddBlog />);
 
-    // Simulate form submission
     fireEvent.click(screen.getByText(/Submit/i));
 
-    // Check if axios.post was called with the correct arguments
     expect(axios.post).toHaveBeenCalledWith("/api/posts", {
       title: "Test Title",
       content: "Test Content",
     });
 
-    // Ensure that the dispatches are made to clear the form fields
     expect(mockDispatch).toHaveBeenCalledWith(RsetBlogTitle(""));
     expect(mockDispatch).toHaveBeenCalledWith(RsetBlogContent(""));
   });
@@ -127,11 +120,11 @@ describe("AddBlog Component", () => {
     useSelector.mockImplementation((selector) => {
       switch (selector) {
         case selectBlogTitle:
-          return "Update Title"; // Mock non-empty blogTitle
+          return "Update Title";
         case selectBlogContent:
-          return "Update Content"; // Mock non-empty blogContent
+          return "Update Content";
         case selectFormErrors:
-          return {}; // Mock form errors
+          return {};
         default:
           return "";
       }
@@ -140,25 +133,23 @@ describe("AddBlog Component", () => {
 
     render(<AddBlog id="123" />);
 
-    // Simulate form submission
     fireEvent.click(screen.getByRole("button", { name: /Update/i }));
 
-    // Check if axios.put was called with the correct arguments
     expect(axios.put).toHaveBeenCalledWith("/api/posts/123", {
       title: "Update Title",
       content: "Update Content",
     });
   });
 
-  it("resets the form fields", () => {
+  it("resets the form", () => {
     useSelector.mockImplementation((selector) => {
       switch (selector) {
         case selectBlogTitle:
-          return "Some Title"; // Mock initial title
+          return "Some Title";
         case selectBlogContent:
-          return "Some Content"; // Mock initial content
+          return "Some Content";
         case selectFormErrors:
-          return {}; // Mock form errors
+          return {};
         default:
           return "";
       }
@@ -166,10 +157,8 @@ describe("AddBlog Component", () => {
 
     render(<AddBlog />);
 
-    // Simulate reset button click
     fireEvent.click(screen.getByText(/Reset/i));
 
-    // Check if the dispatches are called to reset the form
     expect(mockDispatch).toHaveBeenCalledWith(RsetBlogTitle(""));
     expect(mockDispatch).toHaveBeenCalledWith(RsetBlogContent(""));
     expect(mockDispatch).toHaveBeenCalledWith(RsetFormErrors({}));

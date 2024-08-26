@@ -33,25 +33,25 @@ describe("GET /api/posts/:id", () => {
     jest.clearAllMocks();
   });
 
-  test("successfully retrieves a blog post", async () => {
+  test("successfully retrieves a blog post by its id", async () => {
     startDb.mockResolvedValue();
 
     isValidObjectId.mockReturnValue(true);
 
-    const blogPost = { _id: "123", title: "Test Title", content: "Test Content" };
+    const blogPost = { _id: "1", title: "Test Title", content: "Test Content" };
     BlogPostModel.findById.mockResolvedValue(blogPost);
 
     const { req, res } = createMocks({
       method: "GET",
-      params: { id: "123" },
+      params: { id: "1" },
     });
 
-    const response = await GET(req, { params: { id: "123" } });
+    const response = await GET(req, { params: { id: "1" } });
 
     expect(response.status).toBe(200);
     expect(response.data).toEqual(blogPost);
 
-    expect(BlogPostModel.findById).toHaveBeenCalledWith("123");
+    expect(BlogPostModel.findById).toHaveBeenCalledWith("1");
   });
 
   test("returns 400 if the blog post ID is invalid", async () => {
@@ -81,14 +81,14 @@ describe("GET /api/posts/:id", () => {
 
     const { req, res } = createMocks({
       method: "GET",
-      params: { id: "123" },
+      params: { id: "1" },
     });
 
-    const response = await GET(req, { params: { id: "123" } });
+    const response = await GET(req, { params: { id: "1" } });
 
     expect(response.status).toBe(404);
     expect(response.data).toEqual({ message: "Blog post not found" });
 
-    expect(BlogPostModel.findById).toHaveBeenCalledWith("123");
+    expect(BlogPostModel.findById).toHaveBeenCalledWith("1");
   });
 });

@@ -100,7 +100,7 @@ describe("PUT /api/posts/:id", () => {
     expect(BlogPostModel.findByIdAndUpdate).not.toHaveBeenCalled();
   });
 
-  test("returns 400 if neither title nor content is provided", async () => {
+  test("returns 400 if title and content are not provided", async () => {
     startDb.mockResolvedValue();
 
     isValidObjectId.mockReturnValue(true);

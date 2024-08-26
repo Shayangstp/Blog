@@ -1,10 +1,9 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
-import Home from "../../src/components/Home"; // Adjust the path if necessary
+import Home from "../../src/components/Home";
 import "@testing-library/jest-dom";
 
-// Mock axios and BlogCard
 jest.mock("axios");
 jest.mock("../../src/components/BlogCard", () => {
   return function DummyBlogCard({ title, content, id, update }) {

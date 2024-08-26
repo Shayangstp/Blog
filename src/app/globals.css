@@ -71,7 +71,6 @@
 
 body {
   @apply h-full;
-  font-family: "iranSans";
   background-color: #1a1a1a;
   margin: 10px;
   color: white;

@@ -1,29 +1,21 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import BlogCard from "./BlogCard";
 import axios from "axios";
 import { Loading } from "@/lib/loading";
 
-// export const getBlogs = async () => {
-//   try {
-//     const response = await axios.get("https://blog-shayangstps-projects.vercel.app/api/posts", {
-//       catch: "no-store",
-//     });
-//     return response.data;
-//   } catch (err) {
-//     return [];
-//   }
-// };
-
 const Home = () => {
-  // const data = await getBlogs();
   const [blogs, setBlogs] = useState();
+  const [loading, setLoading] = useState(false);
 
   const fetchBlogs = async () => {
+    setLoading(true);
     try {
       const response = await axios.get("/api/posts");
       setBlogs(response.data);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       setBlogs([]);
     }
   };
@@ -34,7 +26,7 @@ const Home = () => {
 
   return (
     <div className="flex gap-5 justify-center items-center flex-wrap mt-10">
-      {blogs ? (
+      {!loading && blogs ? (
         blogs.map((post) => (
           <BlogCard
             key={post._id}
